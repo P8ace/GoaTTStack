@@ -1,15 +1,36 @@
 package components
 
-templ SimpleHtmlSkeleton(pageTitle, pageName string) {
+templ SimpleHtmlSkeleton(children ...templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>{ pageTitle }</title>
+			// <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.min.css"/>
+			// <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic"/>
+			// <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"/>
+			<link rel="stylesheet" href="https://unpkg.com/axist@latest/dist/axist.min.css"/>
+			<title>Tuck in service</title>
+			<link href="/static/css/tailwind.css" rel="stylesheet"/>
 		</head>
 		<body>
-			<p>{ pageName }</p>
+			for _, child := range children {
+				@child
+			}
 		</body>
 	</html>
+}
+
+templ ParagraphElement(pageName string) {
+	<p>{ pageName } </p>
+}
+
+templ NavigationElement() {
+	<nav class="navigation">
+		<ol>
+			<li class="navitem"><a href="/courses">Courses</a></li>
+			<li class="navitem"><a href="/pricing">Pricing</a></li>
+			<li class="navitem"><a href="/about">About</a></li>
+		</ol>
+	</nav>
 }

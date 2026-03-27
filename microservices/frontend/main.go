@@ -25,13 +25,22 @@ func (self *app) registerControllers() http.Handler {
 	controller := controllers.NewController()
 	mux.HandleFunc("/health", controller.HealthController)
 
-	mainPage := components.SimpleHtmlSkeleton("Tuck in service", "In the Main page")
+	navigation := components.NavigationElement()
+	mainParagraph := components.ParagraphElement("In the Main page")
+	coursesParagraph := components.ParagraphElement("In the Courses page")
+	pricesParagraph := components.ParagraphElement("In the Prices page")
+	aboutParagraph := components.ParagraphElement("In the About page")
+
+	mainPage := components.SimpleHtmlSkeleton(navigation, mainParagraph)
 	mux.Handle("/", templ.Handler(mainPage))
-	coursesPage := components.SimpleHtmlSkeleton("Tuck in service", "In the Courses page")
+
+	coursesPage := components.SimpleHtmlSkeleton(navigation, coursesParagraph)
 	mux.Handle("/courses", templ.Handler(coursesPage))
-	pricesPage := components.SimpleHtmlSkeleton("Tuck in service", "In the Prices page")
+
+	pricesPage := components.SimpleHtmlSkeleton(navigation, pricesParagraph)
 	mux.Handle("/pricing", templ.Handler(pricesPage))
-	AboutPage := components.SimpleHtmlSkeleton("Tuck in service", "In the About page")
+
+	AboutPage := components.SimpleHtmlSkeleton(navigation, aboutParagraph)
 	mux.Handle("/about", templ.Handler(AboutPage))
 
 	return mux
